@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Day 2: Build the Judge &mdash; Mini-Judge</title>
+<title>Day 2: Build the Judge &middot; Mini-Judge</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -29,32 +29,32 @@
 <div class="container">
   <span class="day-badge">Day 2 &middot; Tue Jul 7</span>
   <h1>Testing Simple Programs</h1>
-  <p class="lead">Today's goal: turn yesterday's manual bug hunt into a machine that does it automatically &mdash; your first real version of Mini-Judge.</p>
+  <p class="lead">Today's goal: turn yesterday's manual bug hunt into a machine that does it automatically: your first real version of Mini-Judge.</p>
 
   <div class="section-block learn">
     <span class="section-tag">Learn</span>
     <h2>📖 What makes a good test case?</h2>
     <p>
       Quick reminder from Day 1: a <strong>bug</strong> is code that quietly does
-      something other than what its author meant &mdash; no crash, no error message,
+      something other than what its author meant: no crash, no error message,
       just a wrong answer. Yesterday you found bugs by guessing years and checking the
       answer by hand. A <strong>test case</strong> is just that same idea, written down
       as data instead of done in your head: an input and the answer it should produce,
       like <code>(1900, false)</code>. A judge is a program that runs a whole list of
-      test cases automatically and tells you which ones fail &mdash; it's "guess a year
+      test cases automatically and tells you which ones fail. It's "guess a year
       and check by hand," but faster and impossible to get lazy about.
     </p>
-    <p>The best test cases aren't random &mdash; they target <strong>edge cases</strong>: the unusual spots where bugs like to hide.</p>
+    <p>The best test cases aren't random. They target <strong>edge cases</strong>: the unusual spots where bugs like to hide.</p>
     <ul>
-      <li><strong>Boundaries</strong> &mdash; exactly divisible by 100? by 400?</li>
-      <li><strong>Unusual values</strong> &mdash; year 0, a negative year, a far-future year.</li>
-      <li><strong>Ordinary cases too</strong> &mdash; you still need some "obviously fine" inputs, so a solution that's <em>too</em> suspicious of edge cases doesn't accidentally fail everything.</li>
+      <li><strong>Boundaries</strong>: exactly divisible by 100? by 400?</li>
+      <li><strong>Unusual values</strong>: year 0, a negative year, a far-future year.</li>
+      <li><strong>Ordinary cases too</strong>: you still need some "obviously fine" inputs, so a solution that's <em>too</em> suspicious of edge cases doesn't accidentally fail everything.</li>
     </ul>
 
     <h3>A new Rust idea: passing a function as a value</h3>
     <p>
-      Today's judge needs to test <em>any</em> candidate function you hand it &mdash;
-      the correct one, a buggy one, or (on Day 4) one an AI wrote. Rust lets you pass a
+      Today's judge needs to test <em>any</em> candidate function you hand it: the
+      correct one, a buggy one, or (on Day 4) one an AI wrote. Rust lets you pass a
       function itself as a value, using the type <code>fn(i32) -&gt; bool</code> (read:
       "a function that takes an <code>i32</code> and returns a <code>bool</code>"):
     </p>
@@ -84,14 +84,14 @@ fn main() {
       <textarea class="pg-editor" spellcheck="false" rows="10"></textarea>
       <pre class="pg-output"></pre>
     </div>
-    <p class="worksheet-note">Notice: no parentheses after <code>is_leap_buggy_1</code> when we pass it in &mdash; parentheses would <em>call</em> the function; without them, we're handing over the function itself, for the judge to call later.</p>
+    <p class="worksheet-note">Notice: no parentheses after <code>is_leap_buggy_1</code> when we pass it in. Parentheses would <em>call</em> the function; without them, we're handing over the function itself, for the judge to call later.</p>
 
     <h3>How the judge fits together</h3>
     <div class="diagram">
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;align-items:stretch;">
-        <div class="card reveal" style="max-width:160px;transition-delay:0s;"><h3>1. Test cases</h3><p style="font-size:0.88rem;">An array of (year, expected) pairs &mdash; data, not code.</p></div>
+        <div class="card reveal" style="max-width:160px;transition-delay:0s;"><h3>1. Test cases</h3><p style="font-size:0.88rem;">An array of (year, expected) pairs: data, not code.</p></div>
         <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.1s;">&rarr;</div>
-        <div class="card reveal" style="max-width:160px;transition-delay:0.15s;"><h3>2. Candidate</h3><p style="font-size:0.88rem;">The function being graded &mdash; correct, buggy, or AI-written.</p></div>
+        <div class="card reveal" style="max-width:160px;transition-delay:0.15s;"><h3>2. Candidate</h3><p style="font-size:0.88rem;">The function being graded: correct, buggy, or AI-written.</p></div>
         <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.25s;">&rarr;</div>
         <div class="card reveal" style="max-width:160px;transition-delay:0.3s;"><h3>3. Compare</h3><p style="font-size:0.88rem;">Actual answer vs. expected answer, for every test case.</p></div>
         <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.4s;">&rarr;</div>
@@ -112,9 +112,9 @@ PASS  year=2023
     <span class="section-tag">Do</span>
     <h2>🔨 Build the Judge</h2>
     <ol>
-      <li>Write your test-case table first (paper or the worksheet below) &mdash; normal cases, boundary cases, weird cases.</li>
+      <li>Write your test-case table first (paper or the worksheet below): normal cases, boundary cases, weird cases.</li>
       <li>Find the skeleton in the Demo section below and add your test cases to it.</li>
-      <li>Fill in the three <code>TODO</code> spots in the <code>judge</code> function &mdash; that's the part that actually reports PASS/FAIL and the score.</li>
+      <li>Fill in the three <code>TODO</code> spots in the <code>judge</code> function. That's the part that actually reports PASS/FAIL and the score.</li>
       <li>Change which function <code>judge(...)</code> is called with in <code>main</code> to each buggy version in turn, and click Run. Keep adding test cases until <strong>every</strong> buggy version fails at least one test, and the correct version passes all of them.</li>
     </ol>
     <div class="callout tip">
@@ -123,7 +123,7 @@ PASS  year=2023
     <div class="callout tip">
       <strong>Don't panic at yellow text.</strong> The output often includes
       <em>warnings</em> about unused variables or functions while you're only halfway
-      through filling in the TODOs &mdash; that's normal and expected. Only red
+      through filling in the TODOs. That's normal and expected. Only red
       <code>error</code> text (and a status that says "Compile error") means something
       is actually broken.
     </div>
@@ -258,10 +258,9 @@ fn judge(candidate: fn(i32) -> bool, test_cases: &[(i32, bool)]) {
 
   <div class="callout checkpoint">
     <strong>Checkpoint:</strong> if all four boxes above are checked, you've completed
-    Tier 1 &mdash; a legitimate, complete project on its own. Finished with time to
+    Tier 1: a legitimate, complete project on its own. Finished with time to
     spare? Head to <a href="extensions.html">Extensions</a> and try E1 (a second
-    problem). Not quite there yet? That's fine &mdash; ask a mentor, and Day 3 will
-    start from a working judge either way.
+    problem). 
   </div>
 
   <div class="hero-actions" style="justify-content:flex-start;margin:2rem 0;">

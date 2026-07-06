@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Resources &mdash; Mini-Judge</title>
+<title>Resources &middot; Mini-Judge</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -34,26 +34,26 @@
     <div class="card"><h3>Test case</h3><p style="font-size:0.9rem;">A single (input, expected output) pair used to check a solution.</p></div>
     <div class="card"><h3>Edge case</h3><p style="font-size:0.9rem;">An unusual input (a boundary, an empty value, a huge number) where bugs like to hide.</p></div>
     <div class="card"><h3>Specification</h3><p style="font-size:0.9rem;">A precise rule that defines the correct answer for every possible input, not just examples.</p></div>
-    <div class="card"><h3><code>spec fn</code></h3><p style="font-size:0.9rem;">A Verus function that exists only to describe a specification mathematically &mdash; it's never actually run.</p></div>
+    <div class="card"><h3><code>spec fn</code></h3><p style="font-size:0.9rem;">A Verus function that exists only to describe a specification mathematically: it's never actually run.</p></div>
     <div class="card"><h3><code>exec fn</code></h3><p style="font-size:0.9rem;">An ordinary Rust function that actually runs. Most functions you write are exec functions.</p></div>
-    <div class="card"><h3><code>proof fn</code></h3><p style="font-size:0.9rem;">A Verus function containing a logical argument (a proof) rather than a running program &mdash; used for facts that need more help than a simple <code>ensures</code> clause.</p></div>
+    <div class="card"><h3><code>proof fn</code></h3><p style="font-size:0.9rem;">A Verus function containing a logical argument (a proof) rather than a running program, used for facts that need more help than a simple <code>ensures</code> clause.</p></div>
     <div class="card"><h3><code>requires</code> / <code>ensures</code></h3><p style="font-size:0.9rem;">A precondition (what must be true going in) and a postcondition (what's guaranteed coming out) on a function.</p></div>
-    <div class="card"><h3>SMT solver</h3><p style="font-size:0.9rem;">A program (Verus uses one called Z3) that automatically checks whether a logical statement is always true, always false, or neither &mdash; the engine that actually does Verus's proving.</p></div>
+    <div class="card"><h3>SMT solver</h3><p style="font-size:0.9rem;">A program (Verus uses one called Z3) that automatically checks whether a logical statement is always true, always false, or neither: the engine that actually does Verus's proving.</p></div>
     <div class="card"><h3>Verified vs. tested</h3><p style="font-size:0.9rem;">Tested = checked on the inputs you tried. Verified = proven correct for every possible input, by an SMT solver rather than a human.</p></div>
-    <div class="card"><h3>pass@k</h3><p style="font-size:0.9rem;">The fraction of k independent AI attempts that fully succeed &mdash; a measure of consistency, not just luck.</p></div>
+    <div class="card"><h3>pass@k</h3><p style="font-size:0.9rem;">The fraction of k independent AI attempts that fully succeed: a measure of consistency, not just luck.</p></div>
   </div>
 
   <h2>Go further</h2>
   <ul>
-    <li><strong>Verus</strong> &mdash; the tool you used on Day 3. The official tutorial (<a href="https://verus-lang.github.io/verus/guide/">verus-lang.github.io/verus/guide</a>) covers everything from this week's basics up through loops, data structures, and much harder proofs.</li>
-    <li><strong>Dafny</strong> &mdash; a similar but older and more teaching-oriented verification language, often used as a gentler first introduction to the same ideas.</li>
-    <li><strong>Property-based testing</strong> &mdash; libraries like <code>proptest</code> (Rust) or <code>Hypothesis</code> (Python) automatically generate random test inputs and search for the smallest failing example, sitting a step below full verification.</li>
-    <li><strong>Code-generation benchmarks</strong> &mdash; research papers like HumanEval and MBPP measure how often AI models write fully-correct code on curated problem sets, using the pass@k idea from the Extensions page.</li>
-    <li><strong>VeriContest</strong> &mdash; the research effort behind this internship; ask Zichen or Wenxi for the full picture and current results.</li>
+    <li><strong>Verus</strong>: the tool you used on Day 3. The official tutorial (<a href="https://verus-lang.github.io/verus/guide/">verus-lang.github.io/verus/guide</a>) covers everything from this week's basics up through loops, data structures, and much harder proofs.</li>
+    <li><strong>Dafny</strong>: a similar but older and more teaching-oriented verification language, often used as a gentler first introduction to the same ideas.</li>
+    <li><strong>Property-based testing</strong>: libraries like <code>proptest</code> (Rust) or <code>Hypothesis</code> (Python) automatically generate random test inputs and search for the smallest failing example, sitting a step below full verification.</li>
+    <li><strong>Code-generation benchmarks</strong>: research papers like HumanEval and MBPP measure how often AI models write fully-correct code on curated problem sets, using the pass@k idea from the Extensions page.</li>
+    <li><strong><a href="https://hiprel-group.github.io/VeriContest/" target="_blank" rel="noopener">VeriContest</a></strong>: the research effort behind this internship; ask Zichen or Wenxi for the full picture and current results.</li>
   </ul>
 
   <h2>Your report template</h2>
-  <p>The fill-in report you'll complete on Day 5 lives on the <a href="day5.html">Day 5 page</a> &mdash; it autosaves as you type and has a print/PDF button.</p>
+  <p>The fill-in report you'll complete on Day 5 lives on the <a href="day5.html">Day 5 page</a>. It autosaves as you type and has a print/PDF button.</p>
 </div>
 
 <footer class="site-footer">
