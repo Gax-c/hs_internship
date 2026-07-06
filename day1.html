@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1: Bug Hunt &mdash; Mini-Judge</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">🐞 Mini-Judge</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="project.html">The Project</a>
+      <a href="day1.html">Day 1</a>
+      <a href="day2.html">Day 2</a>
+      <a href="day3.html">Day 3</a>
+      <a href="day4.html">Day 4</a>
+      <a href="day5.html">Day 5</a>
+      <a href="extensions.html">Extensions</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="day-badge">Day 1 &middot; Mon Jul 6</span>
+  <h1>Introduction to Verified Programming</h1>
+  <p class="lead">Today's goal: understand why "it looks right" isn't the same as "it is right" &mdash; and prove it to yourself by breaking some code.</p>
+
+  <div class="section-block learn">
+    <span class="section-tag">Learn</span>
+    <h2>📖 Code, Tests, Specs, and Proofs</h2>
+    <p>
+      Imagine you write a function that checks if a year is a leap year. You run it on
+      the year 2024, and it says "yes." Great &mdash; but does that mean your code is
+      <em>correct</em>? Not really. It means your code gives the right answer for
+      <strong>one</strong> input. There could be a thousand other inputs where it's wrong.
+    </p>
+    <p>
+      This week is about closing that gap, using four ideas that build on each other:
+      code, tests, specifications, and proofs. We'll use a language called
+      <strong>Rust</strong> all week, and on Day 3 a real verification tool called
+      <strong>Verus</strong>. Let's take things one at a time, starting from the very
+      beginning &mdash; assume nothing, we'll build it all up together.
+    </p>
+
+    <h3>What does code actually look like?</h3>
+    <p>
+      <strong>Code</strong> is just a very precise, very literal set of instructions for
+      a computer &mdash; more like a recipe than an essay. Here's a handful of the
+      building blocks you'll see everywhere this week, in Rust:
+    </p>
+    <table class="schedule">
+      <thead><tr><th>Term</th><th>What it means</th><th>What it looks like</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Variable</strong></td><td>A labeled box that holds a value</td><td><code>let age = 16;</code></td></tr>
+        <tr><td><strong>Function</strong></td><td>A reusable recipe: takes some input, does steps, hands back an output</td><td><code>fn double(x: i32) -&gt; i32 {<br>&nbsp;&nbsp;&nbsp;&nbsp;x * 2<br>}</code></td></tr>
+        <tr><td><strong>Type</strong></td><td>What <em>kind</em> of value something is &mdash; Rust always wants to know</td><td><code>i32</code> (a whole number), <code>bool</code> (true/false)</td></tr>
+        <tr><td><strong>Operator</strong></td><td>A symbol that does an operation &mdash; math, or a comparison</td><td><code>+ - * / %</code> and <code>== != && ||</code></td></tr>
+        <tr><td><strong>Condition</strong></td><td>Code that only runs when something is true</td><td><code>if age &gt;= 18 { ... }</code></td></tr>
+        <tr><td><strong>Return value</strong></td><td>The answer a function hands back &mdash; in Rust, usually just the last line, with no semicolon</td><td><code>x * 2</code></td></tr>
+        <tr><td><strong>Comment</strong></td><td>A note for humans; the computer ignores anything after <code>//</code></td><td><code>// this is a note</code></td></tr>
+      </tbody>
+    </table>
+    <p>One operator worth calling out early, since it's the heart of the leap-year rule: <code>%</code> ("modulo") gives you the <em>remainder</em> after division. <code>10 % 3</code> is <code>1</code>, because 10 divided by 3 is 3 with 1 left over. "<code>year % 4 == 0</code>" is just code for "year divides evenly by 4."</p>
+    <p>Here's a tiny complete Rust program using all of the above. Click <strong>Run</strong> below, then try changing some values and running it again:</p>
+
+    <div class="playground" data-tool="rustc">
+      <script type="text/plain" class="code-source">
+fn double(x: i32) -> i32 {   // a function: a reusable recipe
+    x * 2                     // the last expression (no semicolon) is the return value
+}
+
+fn main() {
+    let name = "Ada";          // a variable: a labeled box holding a value
+    let age = 16;              // another variable, holding a number
+
+    println!("Hello, {}", name);
+    println!("In 4 years you'll be {}", age + 4);
+
+    println!("{}", double(21));
+
+    println!("{}", 10 % 3);        // remainder after dividing 10 by 3
+    println!("{}", 10 % 3 == 1);   // == asks "is this equal to that?" and answers true/false
+}
+      </script>
+      <div class="code-toolbar">
+        <span class="code-lang">Rust</span>
+        <button class="pg-run" type="button">&#9654; Run</button>
+        <button class="pg-reset" type="button">Reset code</button>
+        <a class="open-playground-link" href="https://play.rust-lang.org/" target="_blank" rel="noopener">Open Playground ↗</a>
+        <span class="pg-status"></span>
+      </div>
+      <textarea class="pg-editor" spellcheck="false" rows="12"></textarea>
+      <pre class="pg-output"></pre>
+    </div>
+    <p class="worksheet-note">Try changing <code>age</code> or the number passed to <code>double(...)</code> and running again.</p>
+
+    <h3>What is a bug?</h3>
+    <p>
+      A <strong>bug</strong> is a mistake in code &mdash; a place where the code does
+      something different from what the person writing it actually meant. The tricky
+      part: buggy code usually doesn't crash or show an error message. It just quietly
+      gives a wrong answer, and looks completely normal while doing it. That's what
+      makes bugs hard to catch just by reading code &mdash; you often have to actually
+      run it on the right input to notice anything is wrong.
+    </p>
+    <div class="callout tip">
+      <strong>Where the name comes from:</strong> engineers were already calling
+      mechanical glitches "bugs" in the 1800s, but computing's most famous one is real:
+      in 1947, a team working on the Harvard Mark II computer found an actual moth
+      trapped in one of its relays, causing a malfunction. They taped it into their
+      logbook, labeled "first actual case of bug being found." The name stuck.
+    </div>
+    <p>Here's a tiny bug that has nothing to do with leap years, so you can see the idea in isolation &mdash; click Run and see what you actually get:</p>
+    <div class="playground" data-tool="rustc">
+      <script type="text/plain" class="code-source">
+fn average(a: i32, b: i32) -> i32 {
+    a + b / 2   // bug! this divides only b by 2, THEN adds a
+}
+
+fn main() {
+    println!("{}", average(4, 6));   // you'd expect 5 -- what do you actually get?
+}
+      </script>
+      <div class="code-toolbar">
+        <span class="code-lang">Rust</span>
+        <button class="pg-run" type="button">&#9654; Run</button>
+        <button class="pg-reset" type="button">Reset code</button>
+        <a class="open-playground-link" href="https://play.rust-lang.org/" target="_blank" rel="noopener">Open Playground ↗</a>
+        <span class="pg-status"></span>
+      </div>
+      <textarea class="pg-editor" spellcheck="false" rows="7"></textarea>
+      <pre class="pg-output"></pre>
+    </div>
+    <p class="worksheet-note">
+      No error message, no crash &mdash; just a wrong number (Rust computes
+      <code>b / 2</code> before the addition, exactly as written). The code follows the
+      order of operations perfectly; it just isn't what the programmer meant. That's a
+      bug. (The fix: <code>(a + b) / 2</code>.)
+    </p>
+
+    <h3>What does a specification look like?</h3>
+    <p>
+      Let's use the smallest example possible: a function that checks whether a number
+      is even. Someone asks you for this in plain English:
+    </p>
+    <blockquote>Write a function that checks if a number is even.</blockquote>
+    <p>
+      That sounds obvious &mdash; but before you write a single line of code, ask
+      yourself some questions:
+    </p>
+    <ul>
+      <li>What should happen for <code>0</code>? (Is zero even? Yes &mdash; but would you have been sure without asking?)</li>
+      <li>What about a negative number, like <code>-4</code>?</li>
+      <li>What about a number that isn't a whole number, like <code>2.5</code>? The description never said "whole number" &mdash; though in Rust, choosing the type <code>i32</code> (whole numbers only) already answers this question for us before we even get to write the rule!</li>
+    </ul>
+    <p>
+      A <strong>specification</strong> is what you get once you've answered every one of
+      those questions and written the rule down precisely, so there's no room left for
+      "wait, what should it do here?" Here's one:
+    </p>
+    <div class="callout tip">
+      <strong>Specification: <code>is_even(n)</code></strong>
+      <ul style="margin-bottom:0;">
+        <li><strong>Input:</strong> <code>n</code> is a whole number, type <code>i32</code> (positive, negative, or zero).</li>
+        <li><strong>Output:</strong> <code>true</code> if <code>n</code> divided by 2 leaves no remainder, otherwise <code>false</code>.</li>
+        <li><strong>Decided edge cases:</strong> <code>0</code> counts as even. Negative numbers follow the same rule as positive ones (<code>-4</code> is even, <code>-3</code> is odd).</li>
+      </ul>
+    </div>
+    <p>Once a spec is this precise, turning it into code is almost mechanical:</p>
+    <div class="playground" data-tool="rustc">
+      <script type="text/plain" class="code-source">
+fn is_even(n: i32) -> bool {
+    n % 2 == 0
+}
+
+fn main() {
+    // Try the exact cases the spec above talks about:
+    println!("{}", is_even(4));    // an ordinary positive number
+    println!("{}", is_even(0));    // the spec says: true
+    println!("{}", is_even(-4));   // the spec says: true
+    println!("{}", is_even(-3));   // the spec says: false
+}
+      </script>
+      <div class="code-toolbar">
+        <span class="code-lang">Rust</span>
+        <button class="pg-run" type="button">&#9654; Run</button>
+        <button class="pg-reset" type="button">Reset code</button>
+        <a class="open-playground-link" href="https://play.rust-lang.org/" target="_blank" rel="noopener">Open Playground ↗</a>
+        <span class="pg-status"></span>
+      </div>
+      <textarea class="pg-editor" spellcheck="false" rows="9"></textarea>
+      <pre class="pg-output"></pre>
+    </div>
+    <p class="worksheet-note">
+      Notice the shape of this: vague description &rarr; a list of questions the
+      description didn't answer &rarr; a written-down decision for each one &rarr; code
+      that implements exactly those decisions. That's the whole idea of a specification,
+      and it's exactly what you'll do for the leap-year problem on Day 3 &mdash; except
+      on Day 3, instead of just eyeballing that the code matches the spec, a real tool
+      will <em>prove</em> it.
+    </p>
+
+    <h3>How the four ideas fit together</h3>
+    <div class="diagram">
+      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;align-items:stretch;">
+        <div class="card reveal" style="max-width:170px;transition-delay:0s;">
+          <h3>1. Code</h3>
+          <p style="font-size:0.88rem;">The program that's supposed to solve the problem. It might have bugs.</p>
+        </div>
+        <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.1s;">&rarr;</div>
+        <div class="card reveal" style="max-width:170px;transition-delay:0.15s;">
+          <h3>2. Tests</h3>
+          <p style="font-size:0.88rem;">Specific examples: "for this input, the answer should be that." Catches known problem cases.</p>
+        </div>
+        <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.25s;">&rarr;</div>
+        <div class="card reveal" style="max-width:170px;transition-delay:0.3s;">
+          <h3>3. Specification</h3>
+          <p style="font-size:0.88rem;">A precise rule for <em>every</em> possible input, not just examples. Removes ambiguity.</p>
+        </div>
+        <div class="reveal" style="align-self:center;font-size:1.4rem;color:var(--text-muted);transition-delay:0.4s;">&rarr;</div>
+        <div class="card reveal" style="max-width:170px;transition-delay:0.45s;">
+          <h3>4. Proof</h3>
+          <p style="font-size:0.88rem;">A mathematical guarantee the code matches the spec for <em>every</em> input, forever.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>What is a proof, really?</h3>
+    <p>
+      Suppose you want to know: <em>is the sum of any two even numbers always even?</em>
+      Let's check a few:
+    </p>
+    <ul>
+      <li>2 + 4 = <strong>6</strong> (even)</li>
+      <li>6 + 8 = <strong>14</strong> (even)</li>
+      <li>10 + 100 = <strong>110</strong> (even)</li>
+    </ul>
+    <p>
+      Every test passes so far. But we've only checked 3 pairs out of infinitely many
+      possible pairs of even numbers &mdash; no matter how many more we try, we can
+      never test <em>all</em> of them by hand. A <strong>proof</strong> settles the
+      question completely, using logic instead of examples. Here's the whole argument,
+      one step at a time:
+    </p>
+    <ol>
+      <li>Every even number is "2 times some whole number." For example, <code>6 = 2 &times; 3</code> and <code>10 = 2 &times; 5</code>.</li>
+      <li>So let's give the two whole numbers names: say our first even number is <code>2 &times; a</code>, and our second is <code>2 &times; b</code> &mdash; where <code>a</code> and <code>b</code> could be <em>any</em> whole numbers at all.</li>
+      <li>Their sum is <code>(2 &times; a) + (2 &times; b)</code>, which is the same thing as <code>2 &times; (a + b)</code>.</li>
+      <li>"2 times (a + b)" is even, by the very definition of what "even" means &mdash; no matter what number <code>a + b</code> turns out to be.</li>
+    </ol>
+    <p>
+      Check it against the examples above: for <code>6 + 10</code>, we have <code>a = 3</code> and <code>b = 5</code>, so the proof says the sum is <code>2 &times; (3 + 5) = 2 &times; 8 = 16</code>. Sure enough, <code>6 + 10 = 16</code>, and it's even &mdash; exactly as the general argument predicted, without us having to test that specific pair. Because <code>a</code> and <code>b</code> stood for <em>any</em> whole numbers, this one argument covers every possible pair of even numbers there will ever be. You've likely written a proof shaped like this in a math class already.
+    </p>
+    <p>
+      A proof about code works the same way: instead of running the program on a
+      thousand inputs and hoping you covered the important ones, a proof reasons about
+      <em>all</em> inputs at once and guarantees the code matches its specification
+      forever &mdash; not just for the cases someone happened to try. This isn't just a
+      nice idea for this internship: on <strong>Day 3</strong>, you will use a real tool
+      called <strong>Verus</strong> to write exactly this kind of proof about your own
+      <code>is_leap</code> function, and it will tell you, for certain, whether it holds
+      for literally every possible input.
+    </p>
+
+    <p>
+      Bugs like these have caused real, expensive disasters &mdash; a rocket
+      (Ariane 5) self-destructed because of a single unhandled number overflow, and a
+      radiation therapy machine (Therac-25) gave lethal overdoses because of a race
+      condition no one tested for. Nobody thought their code was wrong. Nobody had
+      tested the specific case that broke it. Nobody had proved it correct, either
+      &mdash; if they had, that overflow would have been caught before it ever flew.
+    </p>
+
+    <p>
+      <strong>VeriContest</strong> is a research effort (the reason this internship
+      exists) that studies exactly this: given a problem, can we write down a precise
+      specification, and can we automatically check &mdash; or even prove &mdash; that
+      code, including code written by an AI, actually satisfies it? This week you'll
+      build a tiny version of that yourself, called <strong>Mini-Judge</strong>, using
+      real tools (Rust and Verus) rather than a simplified stand-in. See
+      <a href="project.html">The Project</a> for the full picture.
+    </p>
+  </div>
+
+  <div class="section-block do">
+    <span class="section-tag">Do</span>
+    <h2>🔨 Bug Hunt: Leap Years</h2>
+    <p>Here's the rule for leap years, in plain English:</p>
+    <blockquote>A year is a leap year if it's divisible by 4 &mdash; except years divisible by 100, which are <em>not</em> leap years &mdash; except years divisible by 400, which <em>are</em> leap years after all.</blockquote>
+    <p>
+      Below are three functions that all <em>claim</em> to implement this rule. Each one
+      has a bug &mdash; a case where it disagrees with the correct answer. Your job is
+      to find a year that exposes each bug, just by trying different inputs. No need to
+      read the code closely (though you can, once you're intrigued) &mdash; just play
+      with it like a detective.
+    </p>
+    <ol>
+      <li>Find the live playground in the Demo section below.</li>
+      <li>Change the <code>let year = 2023;</code> line to a year you want to try, then click <strong>Run</strong>.</li>
+      <li>Compare "Correct" to each "Buggy #" line. If they disagree, you found a case that exposes that bug!</li>
+      <li>Try to find at least one exposing year for each of the three buggy versions. Think about <em>unusual</em> years: centuries, very old years, the current year, year 0, even a negative year...</li>
+      <li>Record every exposing year you find in the table in the <strong>Deliverable</strong> section below.</li>
+    </ol>
+  </div>
+
+  <div class="section-block demo">
+    <span class="section-tag">Demo &middot; runs for real, right here</span>
+    <h2>🧪 The buggy leap-year functions</h2>
+    <div class="playground" data-tool="rustc">
+      <script type="text/plain" class="code-source">
+fn is_leap_correct(year: i32) -> bool {
+    year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+}
+
+fn is_leap_buggy_1(year: i32) -> bool {
+    year % 4 == 0 && year % 100 != 0
+}
+
+fn is_leap_buggy_2(year: i32) -> bool {
+    year % 4 == 0
+}
+
+fn is_leap_buggy_3(year: i32) -> bool {
+    year % 4 == 0 && year % 400 == 0
+}
+
+fn main() {
+    let year = 2023;
+
+    println!("Correct:  {}", is_leap_correct(year));
+    println!("Buggy #1: {}", is_leap_buggy_1(year));
+    println!("Buggy #2: {}", is_leap_buggy_2(year));
+    println!("Buggy #3: {}", is_leap_buggy_3(year));
+}
+      </script>
+      <div class="code-toolbar">
+        <span class="code-lang">Rust</span>
+        <button class="pg-run" type="button">&#9654; Run</button>
+        <button class="pg-reset" type="button">Reset code</button>
+        <a class="open-playground-link" href="https://play.rust-lang.org/" target="_blank" rel="noopener">Open Playground ↗</a>
+        <span class="pg-status"></span>
+      </div>
+      <textarea class="pg-editor" spellcheck="false" rows="20"></textarea>
+      <pre class="pg-output"></pre>
+    </div>
+    <p class="worksheet-note">At <code>year = 2023</code> all four functions agree &mdash; that's on purpose, so you have to go looking for the disagreements yourself. If the Run button ever can't reach the server, use the "Open Playground" link instead &mdash; the same code will already be in your clipboard-ready to paste after you select all the text in the box above.</p>
+  </div>
+
+  <div class="section-block materials">
+    <span class="section-tag">Materials</span>
+    <h2>📁 Downloads (optional)</h2>
+    <p>The playground above already gives you everything you need. These downloads are only useful if you (or a mentor) set up Rust locally.</p>
+    <ul class="file-list">
+      <li><a href="files/is_leap_correct.rs" download>⬇ is_leap_correct.rs</a></li>
+      <li><a href="files/is_leap_buggy_1.rs" download>⬇ is_leap_buggy_1.rs</a></li>
+      <li><a href="files/is_leap_buggy_2.rs" download>⬇ is_leap_buggy_2.rs</a></li>
+      <li><a href="files/is_leap_buggy_3.rs" download>⬇ is_leap_buggy_3.rs</a></li>
+    </ul>
+  </div>
+
+  <div class="section-block deliverable">
+    <span class="section-tag">Deliverable</span>
+    <h2>✅ Bug Hunt Table &amp; Reflection</h2>
+    <p>Fill this in as you go &mdash; it saves automatically in this browser.</p>
+    <table class="worksheet" data-key="day1-bughunt">
+      <thead><tr><th>Year tried</th><th>Which buggy version(s) disagreed?</th><th>What's the correct answer?</th><th>Why do you think it's wrong?</th></tr></thead>
+      <tbody>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Reflection</h3>
+    <p>Why does code correctness matter? What year (or input) surprised you today, and why?</p>
+    <div class="worksheet" data-key="day1-reflection">
+      <textarea class="textbox" data-cell="reflection" placeholder="Write a paragraph here..."></textarea>
+    </div>
+    <p class="save-note">Saved automatically in this browser as you type.</p>
+  </div>
+
+  <div class="callout checkpoint">
+    <strong>Checkpoint:</strong> could you edit the code above and run it yourself? If
+    yes and you found all three bugs with time to spare, ask a
+    mentor for a fourth (harder) buggy version to try. If you're still getting
+    comfortable, that's totally fine &mdash; tomorrow's starting point will meet you
+    where you are.
+  </div>
+
+  <div class="hero-actions" style="justify-content:flex-start;margin:2rem 0;">
+    <a class="btn btn-primary" href="day2.html">Day 2: Build the Judge &rarr;</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">Mini-Judge &middot; Hipral Group Summer 2026 HS Internship</div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/codeblock.js"></script>
+<script src="js/playground.js"></script>
+<script src="js/worksheet.js"></script>
+</body>
+</html>

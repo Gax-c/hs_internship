@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini-Judge &mdash; HS Internship</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">🐞 Mini-Judge</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="project.html">The Project</a>
+      <a href="day1.html">Day 1</a>
+      <a href="day2.html">Day 2</a>
+      <a href="day3.html">Day 3</a>
+      <a href="day4.html">Day 4</a>
+      <a href="day5.html">Day 5</a>
+      <a href="extensions.html">Extensions</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="day-badge">Summer 2026 &middot; Hipral Group</span>
+    <h1>Build your own tiny code judge.<br>Then get a computer to prove your code is correct.</h1>
+    <p class="lead">
+      Over five mornings you'll build <strong>Mini-Judge</strong>: a small Rust tool
+      that checks whether code is correct. On Day 3 you'll go further than testing ever
+      can &mdash; you'll write a formal specification and use a real tool called
+      <strong>Verus</strong> to <em>prove</em> your code is correct for every possible
+      input, not just the ones you tried. By Friday, you'll use all of this to run a
+      real experiment on an AI: does a precise, formal spec make it more likely the
+      AI's code actually verifies? Everything runs in the official, browser-based Rust
+      and Verus playgrounds &mdash; no installs needed.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="day1.html">Start Day 1 &rarr;</a>
+      <a class="btn btn-outline" href="project.html">What is this project?</a>
+    </div>
+
+    <div class="hero-terminal" aria-hidden="true">
+      <div class="line" style="animation-delay:0.1s">$ verus is_leap_buggy_1.rs</div>
+      <div class="line fail" style="animation-delay:0.7s">error: postcondition not satisfied</div>
+      <div class="line fail" style="animation-delay:1.2s">verification results:: 1 verified, 1 errors</div>
+      <div class="line" style="animation-delay:1.7s">&nbsp;</div>
+      <div class="line" style="animation-delay:1.9s">$ verus is_leap.rs</div>
+      <div class="line pass" style="animation-delay:2.6s">verification results:: 2 verified, 0 errors</div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <h2>This week's schedule</h2>
+  <table class="schedule">
+    <thead>
+      <tr><th>Day</th><th>Theme</th><th>What you'll build</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Day 1<br><span class="worksheet-note">Mon Jul 6</span></td><td>Intro to Verified Programming</td><td>Hunt for bugs in leap-year code by hand</td></tr>
+      <tr><td>Day 2<br><span class="worksheet-note">Tue Jul 7</span></td><td>Testing Simple Programs</td><td>Build your first working judge, in Rust</td></tr>
+      <tr><td>Day 3<br><span class="worksheet-note">Wed Jul 8</span></td><td>Requirements &rarr; Specifications</td><td>Write a spec, then get Verus to <em>prove</em> your code matches it</td></tr>
+      <tr><td>Day 4<br><span class="worksheet-note">Thu Jul 9</span></td><td>AI for Code, Tests &amp; Specs</td><td>Grade AI-written code with your own judge</td></tr>
+      <tr><td>Day 5<br><span class="worksheet-note">Fri Jul 10</span></td><td>Wrap-Up &amp; Presentation</td><td>Final report + live demo</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Jump to a day</h2>
+  <div class="card-grid">
+    <a class="card day-card" href="day1.html"><span class="day-badge">Day 1</span><h3>Bug Hunt</h3><p>Find bugs in broken leap-year code before you write a line of your own.</p></a>
+    <a class="card day-card" href="day2.html"><span class="day-badge">Day 2</span><h3>Build the Judge</h3><p>Turn your bug hunt into an automatic PASS/FAIL machine.</p></a>
+    <a class="card day-card" href="day3.html"><span class="day-badge">Day 3</span><h3>Specs &amp; Proofs</h3><p>Write precise rules, then get a real, computer-checked proof your code follows them.</p></a>
+    <a class="card day-card" href="day4.html"><span class="day-badge">Day 4</span><h3>Grade an AI</h3><p>Does a good spec make an AI write better code? Find out.</p></a>
+    <a class="card day-card" href="day5.html"><span class="day-badge">Day 5</span><h3>Wrap-Up</h3><p>Write your report and present what you built.</p></a>
+    <a class="card day-card" href="extensions.html"><span class="day-badge">Bonus</span><h3>Extensions</h3><p>Finished early? Pick your next challenge here.</p></a>
+  </div>
+
+  <div class="callout tip">
+    <strong>New here?</strong> Visit <a href="project.html">The Project</a> first &mdash;
+    it explains what Mini-Judge is and how the week is organized, with a checklist you
+    can tick off as you go.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">Mini-Judge &middot; Hipral Group Summer 2026 HS Internship &middot; built for learning, not for production 🐞</div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>

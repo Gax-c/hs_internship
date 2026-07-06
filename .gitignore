@@ -1,0 +1,12 @@
+# Progressive unlock: keep Day 3-5 pages out of the repo for now so only
+# Day 1-2 content is visible on the published site. Each morning, unlock the
+# next day by force-adding it (git ignores it by default, so a plain
+# `git add .` won't pick it up):
+#
+#   git add -f day3.html && git commit -m "Unlock Day 3" && git push
+#
+# Or just delete the matching line below once that day is ready to stay
+# public permanently.
+day3.html
+day4.html
+day5.html
