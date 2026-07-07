@@ -1,11 +1,13 @@
-// Live, in-page code playground: an editable textarea that calls the
-// OFFICIAL Rust Playground / Verus Playground execute APIs directly from
-// the browser (both have CORS enabled), so no backend of our own is
-// needed. See ../PLAYGROUND_NOTES.md for how this was verified and what
-// the fallback options are if these services are ever unreachable.
+// Live, in-page code playground: an editable textarea that runs code with no
+// backend of our own. Rust and Verus go through the OFFICIAL Rust Playground /
+// Verus Playground execute APIs directly from the browser (both have CORS
+// enabled). Python runs entirely client-side via Pyodide (CPython compiled to
+// WebAssembly, loaded from a CDN on first use, no server round-trip at all).
+// See ../PLAYGROUND_NOTES.md for how this was verified and what the fallback
+// options are if these services are ever unreachable.
 //
 // Markup contract:
-// <div class="playground" data-tool="rustc|verus">
+// <div class="playground" data-tool="rustc|verus|python">
 //   <script type="text/plain" class="code-source">...starter code...</script>
 //   <div class="code-toolbar">
 //     <span class="code-lang">Rust</span>
@@ -23,7 +25,46 @@ const PLAYGROUND_ENDPOINTS = {
   verus: { url: 'https://play.verus-lang.org/execute', mode: 'detailed' },
 };
 
+const PYODIDE_CDN_URL = 'https://cdn.jsdelivr.net/pyodide/v0.28.0/full/pyodide.js';
+let pyodideLoadPromise = null;
+
+function loadPyodideScript() {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = PYODIDE_CDN_URL;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Could not load the Python runtime from the CDN.'));
+    document.head.appendChild(script);
+  });
+}
+
+async function getPyodide() {
+  if (!pyodideLoadPromise) {
+    pyodideLoadPromise = (async () => {
+      if (typeof loadPyodide !== 'function') {
+        await loadPyodideScript();
+      }
+      return loadPyodide();
+    })();
+  }
+  return pyodideLoadPromise;
+}
+
 async function callPlayground(tool, code) {
+  if (tool === 'python') {
+    const pyodide = await getPyodide();
+    let combined = '';
+    pyodide.setStdout({ batched: (msg) => { combined += msg + '\n'; } });
+    pyodide.setStderr({ batched: (msg) => { combined += msg + '\n'; } });
+    try {
+      await pyodide.runPythonAsync(code);
+      return { ok: true, timed_out: false, stdout: combined, stderr: '' };
+    } catch (err) {
+      // Pyodide's error already includes the Python traceback text.
+      return { ok: false, timed_out: false, stdout: combined, stderr: String(err.message || err) };
+    }
+  }
+
   const target = PLAYGROUND_ENDPOINTS[tool];
   const res = await fetch(target.url, {
     method: 'POST',
@@ -47,7 +88,7 @@ async function callPlayground(tool, code) {
 }
 
 function initPlayground(root) {
-  const tool = root.dataset.tool === 'verus' ? 'verus' : 'rustc';
+  const tool = ['verus', 'python'].includes(root.dataset.tool) ? root.dataset.tool : 'rustc';
   const sourceEl = root.querySelector('.code-source');
   const editor = root.querySelector('.pg-editor');
   const runBtn = root.querySelector('.pg-run');
@@ -61,7 +102,11 @@ function initPlayground(root) {
   async function run() {
     runBtn.disabled = true;
     output.textContent = '';
-    status.textContent = tool === 'verus' ? 'Verifying...' : 'Compiling and running...';
+    if (tool === 'python') {
+      status.textContent = pyodideLoadPromise ? 'Running...' : 'Loading Python runtime (first run only, a few seconds)...';
+    } else {
+      status.textContent = tool === 'verus' ? 'Verifying...' : 'Compiling and running...';
+    }
     status.className = 'pg-status busy';
     try {
       const result = await callPlayground(tool, editor.value);
@@ -84,9 +129,10 @@ function initPlayground(root) {
         status.className = 'pg-status error';
       }
     } catch (err) {
-      output.textContent =
-        "Couldn't reach the playground service. Use the \"Open Playground\" link " +
-        'instead, or check your internet connection.\n\n(' + err + ')';
+      output.textContent = tool === 'python'
+        ? "Couldn't load the Python runtime. Check your internet connection and try again.\n\n(" + err + ')'
+        : "Couldn't reach the playground service. Use the \"Open Playground\" link " +
+          'instead, or check your internet connection.\n\n(' + err + ')';
       status.textContent = 'Connection error';
       status.className = 'pg-status error';
     } finally {

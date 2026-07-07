@@ -143,9 +143,9 @@
     <p>
       This week is about closing that gap, using the four ideas you just read about:
       code, tests, specifications, and proofs. We'll use a language called
-      <strong>Rust</strong> all week, and on Day 3 a real verification tool called
-      <strong>Verus</strong>. Let's take things one at a time, starting from the very
-      beginning: assume nothing, we'll build it all up together.
+      <strong>Rust</strong> for most of the week, and on Day 4 a real verification tool
+      called <strong>Verus</strong>. Let's take things one at a time, starting from the
+      very beginning: assume nothing, we'll build it all up together.
     </p>
 
     <h3>What does code actually look like?</h3>
@@ -313,7 +313,7 @@ fn main() {}
       <code>is_even</code> is a promise: "this function's result always matches the
       spec." <code>verification results:: 2 verified, 0 errors</code> means that
       promise was just checked for every possible <code>i32</code>, not eyeballed.
-      That's exactly what you'll do for the leap-year problem on Day 3.
+      That's exactly what you'll do for the leap-year problem on Day 4.
     </p>
 
     <h3>How the pieces fit together: two workflows</h3>
@@ -344,7 +344,7 @@ fn main() {}
         </div>
       </div>
 
-      <p style="font-weight:700; margin:1.75rem 0 0.5rem;">Workflow 2: Formal Verification (Day 3)</p>
+      <p style="font-weight:700; margin:1.75rem 0 0.5rem;">Workflow 2: Formal Verification (Day 4)</p>
       <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:nowrap;align-items:stretch;overflow-x:auto;padding-bottom:0.25rem;">
         <div class="card reveal" style="max-width:150px;min-width:150px;transition-delay:0s;">
           <h3 style="font-size:0.95rem;">1. Description</h3>
@@ -369,11 +369,11 @@ fn main() {}
     </div>
 
     <p>
-      Day 2 is workflow 1: you'll write code, then test it. The leap-year bug
-      hunt today is a preview of exactly this. Day 3 takes it further with workflow
-      2: you'll write a formal specification <em>first</em>, then get Verus to
-      <em>prove</em> your code matches it, for every input rather than just the ones
-      you happened to try.
+      Days 2 and 3 are workflow 1: you'll code (with AI assistance) and test it. The
+      leap-year bug hunt today is a preview of exactly this. Day 4 takes it further
+      with workflow 2: you'll write a formal specification <em>first</em>, then get
+      Verus to <em>prove</em> your code matches it, for every input rather than just
+      the ones you happened to try.
     </p>
 
     <h3>What is a proof, really?</h3>
@@ -464,7 +464,7 @@ fn main() {}
       A proof about code works the same way: instead of running the program on a
       thousand inputs and hoping you covered the important ones, a proof reasons about
       <em>all</em> inputs at once and guarantees the code matches its specification
-      forever, not just for the cases someone happened to try. On <strong>Day 3</strong>, you will use a real tool
+      forever, not just for the cases someone happened to try. On <strong>Day 4</strong>, you will use a real tool
       called <strong>Verus</strong> to write exactly this kind of proof about your own
       <code>is_leap</code> function, and it will tell you, for certain, whether it holds
       for literally every possible input.

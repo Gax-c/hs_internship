@@ -8,15 +8,15 @@ fn is_leap_correct(year: i32) -> bool {
 }
 
 fn is_leap_buggy_1(year: i32) -> bool {
-    year % 4 == 0 && year % 100 != 0
+    year % 4 == 0 && (year % 100 == 0 || year % 400 == 0)
 }
 
 fn is_leap_buggy_2(year: i32) -> bool {
-    year % 4 == 0
+    year % 4 == 0 && (year % 400 != 0 || year % 100 == 0)
 }
 
 fn is_leap_buggy_3(year: i32) -> bool {
-    year % 4 == 0 && year % 400 == 0
+    year % 4 == 0 && (year % 100 != 0 || year % 40 == 0)
 }
 
 fn judge(candidate: fn(i32) -> bool, test_cases: &[(i32, bool)]) {
