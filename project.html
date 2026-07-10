@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Project &middot; Mini-Judge</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
+<title>The Project &middot; VeriCode</title>
+<link rel="icon" href="icon/image_nontrans.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="brand" href="index.html">🐞 Mini-Judge</a>
+    <a class="brand" href="index.html"><img src="icon/image.png" alt="Hiprel Group" class="brand-icon">VeriCode</a>
     <button class="nav-toggle" aria-label="Toggle menu">☰</button>
     <nav class="site-nav">
       <a href="index.html">Home</a>
@@ -27,7 +27,7 @@
 </header>
 
 <div class="container">
-  <h1>The Project: Mini-Judge</h1>
+  <h1>The Project: VeriCode</h1>
   <p class="lead">
     Every programming problem has three parts that can each go wrong on their own:
     the <strong>code</strong> that solves it, the <strong>tests</strong> that check it,
@@ -39,18 +39,23 @@
     writing proofs, and see for yourself how much of each one it can actually do.
   </p>
 
-  <h2>What is Mini-Judge?</h2>
+  <h2>What is VeriCode?</h2>
   <p>
-    <strong>Mini-Judge</strong> is a small testing tool you'll build (in Python on Day 2,
-    then in Rust from Day 3 onward). You give it:
+    <strong>VeriCode</strong> is the tool you'll build this week for checking
+    whether code is actually correct, combining two different approaches:
+    <strong>automated testing</strong> and <strong>formal verification</strong>.
+    You'll build the testing half first (in Python on Day 2, then in Rust from
+    Day 3 onward), then extend it into a real, computer-checked proof starting
+    Day 4.
   </p>
+  <p>The testing half works like this. You give it:</p>
   <ul>
     <li>a programming problem (we'll use <em>"is this year a leap year?"</em> and <em>"is this number prime?"</em>),</li>
     <li>a table of test cases (input &rarr; expected answer),</li>
     <li>and any candidate function: yours, a buggy one, or one an AI wrote.</li>
   </ul>
   <p>
-    Mini-Judge runs the candidate against every test case and reports exactly which
+    VeriCode runs the candidate against every test case and reports exactly which
     ones pass and which ones fail. That's the same idea behind real automatic grading
     systems, and behind <a href="https://hiprel-group.github.io/VeriContest/" target="_blank" rel="noopener"><strong>VeriContest</strong></a>, which is what inspired this
     internship.
@@ -61,6 +66,8 @@
     (a real verification tool for Rust, the same kind of tool used in the
     research behind VeriContest) to get a mathematical guarantee that your code
     is correct for <em>every</em> possible input, not just the ones in your test table.
+    That's VeriCode's other half: not just checking code against examples, but
+    proving it.
   </p>
   <p>
     Throughout the week, you'll also turn each of these steps over to an AI assistant
@@ -137,7 +144,7 @@
 </div>
 
 <footer class="site-footer">
-  <div class="container">Mini-Judge &middot; Hipral Group Summer 2026 HS Internship</div>
+  <div class="container">VeriCode &middot; Hiprel Group Summer 2026 HS Internship</div>
 </footer>
 
 <script src="js/site.js"></script>

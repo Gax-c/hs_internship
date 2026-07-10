@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Resources &middot; Mini-Judge</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9E%3C/text%3E%3C/svg%3E">
+<title>Resources &middot; VeriCode</title>
+<link rel="icon" href="icon/image_nontrans.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="brand" href="index.html">🐞 Mini-Judge</a>
+    <a class="brand" href="index.html"><img src="icon/image.png" alt="Hiprel Group" class="brand-icon">VeriCode</a>
     <button class="nav-toggle" aria-label="Toggle menu">☰</button>
     <nav class="site-nav">
       <a href="index.html">Home</a>
@@ -40,15 +40,12 @@
     <div class="card"><h3><code>requires</code> / <code>ensures</code></h3><p style="font-size:0.9rem;">A precondition (what must be true going in) and a postcondition (what's guaranteed coming out) on a function.</p></div>
     <div class="card"><h3>SMT solver</h3><p style="font-size:0.9rem;">A program (Verus uses one called Z3) that automatically checks whether a logical statement is always true, always false, or neither: the engine that actually does Verus's proving.</p></div>
     <div class="card"><h3>Verified vs. tested</h3><p style="font-size:0.9rem;">Tested = checked on the inputs you tried. Verified = proven correct for every possible input, by an SMT solver rather than a human.</p></div>
-    <div class="card"><h3>pass@k</h3><p style="font-size:0.9rem;">The fraction of k independent AI attempts that fully succeed: a measure of consistency, not just luck.</p></div>
   </div>
 
   <h2>Go further</h2>
   <ul>
     <li><strong>Verus</strong>: the tool you used on Day 4. The official tutorial (<a href="https://verus-lang.github.io/verus/guide/">verus-lang.github.io/verus/guide</a>) covers everything from this week's basics up through loops, data structures, and much harder proofs.</li>
-    <li><strong>Dafny</strong>: a similar but older and more teaching-oriented verification language, often used as a gentler first introduction to the same ideas.</li>
     <li><strong>Property-based testing</strong>: libraries like <code>proptest</code> (Rust) or <code>Hypothesis</code> (Python) automatically generate random test inputs and search for the smallest failing example, sitting a step below full verification.</li>
-    <li><strong>Code-generation benchmarks</strong>: research papers like HumanEval and MBPP measure how often AI models write fully-correct code on curated problem sets, using the pass@k idea from the Extensions page.</li>
     <li><strong><a href="https://hiprel-group.github.io/VeriContest/" target="_blank" rel="noopener">VeriContest</a></strong>: the research effort behind this internship; ask Zichen or Wenxi for the full picture and current results.</li>
   </ul>
 
@@ -57,7 +54,7 @@
 </div>
 
 <footer class="site-footer">
-  <div class="container">Mini-Judge &middot; Hipral Group Summer 2026 HS Internship</div>
+  <div class="container">VeriCode &middot; Hiprel Group Summer 2026 HS Internship</div>
 </footer>
 
 <script src="js/site.js"></script>
